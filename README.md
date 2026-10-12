@@ -1,4 +1,4 @@
-# RoboSynChallenge 予選：中川側の進捗（チーム maru29）
+# RoboSynChallenge 予選：進捗まとめ（チーム maru29）
 
 最終更新：**2026-10-12 19:31 JST** ／ 締め切り：**2026-10-12 20:59 JST**
 
