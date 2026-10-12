@@ -1,0 +1,16 @@
+numpy==1.26.4
+pyarrow==21.0.0
+pandas==2.3.3
+datasets==3.6.0
+huggingface-hub==0.34.4
+einops==0.8.1
+draccus==0.10.0
+safetensors==0.8.0
+av==16.0.1
+pillow==11.3.0
+jsonlines==4.0.0
+packaging==25.0
+gymnasium==0.29.1
+imageio==2.37.0
+pyserial==3.5
+deepdiff==8.6.1

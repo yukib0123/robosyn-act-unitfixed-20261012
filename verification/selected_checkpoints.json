@@ -1,0 +1,212 @@
+{
+  "table_rearrangement": {
+    "repo_id": "yukib0123/robosyn-act-alltasks-20261012",
+    "revision": "4dbacab83136d3b6e277313368547ea6d28f3d31",
+    "weight_sha256": "516cb072c89c3f92581f4ed9cf586cc934bb885940c54618c1647b08d207d149",
+    "strict_reload": true,
+    "finite_prediction": true,
+    "chunk_shape": [
+      1,
+      50,
+      14
+    ],
+    "raw_grippers": [
+      -3.4300610423088074e-05,
+      9.980052709579468e-06
+    ],
+    "physical_grippers": [
+      -3.4300610423088074e-05,
+      9.980052709579468e-06
+    ],
+    "execution_length": 50
+  },
+  "click_bell": {
+    "repo_id": "RoboSynChallenge/ACT_sim_click_bell",
+    "revision": "677e65fbb15974024ff840893496197ef7db26d4",
+    "weight_sha256": "48e84197ca3598a852ab5cf5f6d45dcd91d68fb55f0935d83b1e71b23b4687f4",
+    "strict_reload": true,
+    "finite_prediction": true,
+    "chunk_shape": [
+      1,
+      50,
+      14
+    ],
+    "raw_grippers": [
+      0.0,
+      0.0
+    ],
+    "physical_grippers": [
+      0.0,
+      0.0
+    ],
+    "execution_length": 50
+  },
+  "water_pouring": {
+    "repo_id": "RoboSynChallenge/ACT_sim_water_pouring",
+    "revision": "0bf0fcfc931a69c52871385f28068fcf873cf07a",
+    "weight_sha256": "40aa483bf3ff18314e89c17ed91066cca867a8aa587c5fb9ecbb963c0eed330c",
+    "strict_reload": true,
+    "finite_prediction": true,
+    "chunk_shape": [
+      1,
+      50,
+      14
+    ],
+    "raw_grippers": [
+      0.9961006045341492,
+      0.9963899254798889
+    ],
+    "physical_grippers": [
+      0.04980503022670746,
+      0.049819495528936386
+    ],
+    "execution_length": 50
+  },
+  "handle_basket": {
+    "repo_id": "RoboSynChallenge/ACT_sim_handle_basket",
+    "revision": "6d5c70c4bb367e23b43e95cb155f7ad53f30cc79",
+    "weight_sha256": "3af52f2a079e66f00c6abc2c8710aef6a8dc3d7f77217a0beb7f53b5db980c7e",
+    "strict_reload": true,
+    "finite_prediction": true,
+    "chunk_shape": [
+      1,
+      50,
+      14
+    ],
+    "raw_grippers": [
+      0.9781033992767334,
+      0.9488681554794312
+    ],
+    "physical_grippers": [
+      0.04890517145395279,
+      0.04744340851902962
+    ],
+    "execution_length": 50
+  },
+  "items_handover": {
+    "repo_id": "RoboSynChallenge/ACT_sim_items_handover",
+    "revision": "86f6ca7f5decd17a92c3218f295de53497383d14",
+    "weight_sha256": "ed95576e59662af5c9a7a49af09822795b44b14251566f8cdb4955a0107d8071",
+    "strict_reload": true,
+    "finite_prediction": true,
+    "chunk_shape": [
+      1,
+      50,
+      14
+    ],
+    "raw_grippers": [
+      1.0094901323318481,
+      1.0113966464996338
+    ],
+    "physical_grippers": [
+      0.05000000074505806,
+      0.05000000074505806
+    ],
+    "execution_length": 50
+  },
+  "drawer_open_place": {
+    "repo_id": "RoboSynChallenge/ACT_sim_drawer_open_place",
+    "revision": "592e30434aad83cf7bd8f1ee105d7c401488743d",
+    "weight_sha256": "2392100f4ef41c0d17c6a1f01b4fc244be098dbca0928bc7f90a07c1f6b4992c",
+    "strict_reload": true,
+    "finite_prediction": true,
+    "chunk_shape": [
+      1,
+      50,
+      14
+    ],
+    "raw_grippers": [
+      1.0169596672058105,
+      1.034978985786438
+    ],
+    "physical_grippers": [
+      0.05000000074505806,
+      0.05000000074505806
+    ],
+    "execution_length": 50
+  },
+  "mixer_operating": {
+    "repo_id": "RoboSynChallenge/ACT_sim_mixer_operating",
+    "revision": "0f12c53a2a6e093ae5e1e28f20480296b45fdf2b",
+    "weight_sha256": "d7b19d76e6a4177ddd5acae1c141a9c53c5585bc9b52ea6bbf55b5ce8780ad97",
+    "strict_reload": true,
+    "finite_prediction": true,
+    "chunk_shape": [
+      1,
+      50,
+      14
+    ],
+    "raw_grippers": [
+      -0.0001903790980577469,
+      1.0004611015319824
+    ],
+    "physical_grippers": [
+      0.0,
+      0.05000000074505806
+    ],
+    "execution_length": 50
+  },
+  "item_assembly": {
+    "repo_id": "RoboSynChallenge/ACT_sim_item_assembly",
+    "revision": "58955958519157176712a1eff319018d78177ddb",
+    "weight_sha256": "69462a12dbb0fe9bee654226ca714778ca5f83e420258456721626befb15bdac",
+    "strict_reload": true,
+    "finite_prediction": true,
+    "chunk_shape": [
+      1,
+      50,
+      14
+    ],
+    "raw_grippers": [
+      1.0148054361343384,
+      1.0156455039978027
+    ],
+    "physical_grippers": [
+      0.05000000074505806,
+      0.05000000074505806
+    ],
+    "execution_length": 50
+  },
+  "manipulate_pipette": {
+    "repo_id": "RoboSynChallenge/ACT_sim_manipulate_pipette",
+    "revision": "ca013b2e202d594bf347530c61c3ba28c06d1bc2",
+    "weight_sha256": "d6bcc59b9688e6c6fbb1017ff144ac868fec4bc9800243d6e4b0c2fa2dc4869f",
+    "strict_reload": true,
+    "finite_prediction": true,
+    "chunk_shape": [
+      1,
+      50,
+      14
+    ],
+    "raw_grippers": [
+      -0.00039896927773952484,
+      1.0082563161849976
+    ],
+    "physical_grippers": [
+      0.0,
+      0.05000000074505806
+    ],
+    "execution_length": 50
+  },
+  "sample_loading": {
+    "repo_id": "RoboSynChallenge/ACT_sim_sample_loading",
+    "revision": "917bf2796f18abd0a16f723573382161f1a5c5c8",
+    "weight_sha256": "f9d42ab0ac597aaef3eaf4aaeae08b15de6d96240be2c64fe4196fabc1dbbd3a",
+    "strict_reload": true,
+    "finite_prediction": true,
+    "chunk_shape": [
+      1,
+      50,
+      14
+    ],
+    "raw_grippers": [
+      1.002685308456421,
+      0.995413601398468
+    ],
+    "physical_grippers": [
+      0.05000000074505806,
+      0.04977067932486534
+    ],
+    "execution_length": 50
+  }
+}

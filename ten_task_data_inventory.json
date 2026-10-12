@@ -1,0 +1,132 @@
+{
+  "table_rearrangement": {
+    "repo_id": "RoboSynChallenge/cobotmagic_Sim_table_rearrangement",
+    "revision": "ca14fdfbb9d39914f09b343e072618462bea97b8",
+    "total_episodes": 1000,
+    "total_frames": 200000,
+    "fps": 25,
+    "video_keys": [
+      "observation.images.cam_high",
+      "observation.images.cam_right_wrist",
+      "observation.images.cam_left_wrist"
+    ],
+    "codebase_version": "v2.1"
+  },
+  "click_bell": {
+    "repo_id": "RoboSynChallenge/cobotmagic_Sim_click_bell",
+    "revision": "dd1f0de495cfec3240beaf2714f239168d5b3fae",
+    "total_episodes": 1000,
+    "total_frames": 74000,
+    "fps": 25,
+    "video_keys": [
+      "cam_high.color",
+      "cam_right_wrist.color",
+      "cam_left_wrist.color"
+    ],
+    "codebase_version": "v2.1"
+  },
+  "water_pouring": {
+    "repo_id": "RoboSynChallenge/cobotmagic_Sim_water_pouring",
+    "revision": "932a287657983c41465d6c9baee5dd478ef61b90",
+    "total_episodes": 1000,
+    "total_frames": 207000,
+    "fps": 25,
+    "video_keys": [
+      "observation.images.cam_high",
+      "observation.images.cam_right_wrist",
+      "observation.images.cam_left_wrist"
+    ],
+    "codebase_version": "v2.1"
+  },
+  "handle_basket": {
+    "repo_id": "RoboSynChallenge/cobotmagic_Sim_handle_basket",
+    "revision": "c40819caabfea75e0724307845ddf5ee7f15ae8a",
+    "total_episodes": 1000,
+    "total_frames": 329794,
+    "fps": 25,
+    "video_keys": [
+      "observation.images.cam_high",
+      "observation.images.cam_right_wrist",
+      "observation.images.cam_left_wrist"
+    ],
+    "codebase_version": "v2.1"
+  },
+  "items_handover": {
+    "repo_id": "RoboSynChallenge/cobotmagic_Sim_items_handover",
+    "revision": "20a88bf0bc3fe3a1ae58ad97ed60a06c3431684a",
+    "total_episodes": 1000,
+    "total_frames": 327000,
+    "fps": 25,
+    "video_keys": [
+      "observation.images.cam_high",
+      "observation.images.cam_right_wrist",
+      "observation.images.cam_left_wrist"
+    ],
+    "codebase_version": "v2.1"
+  },
+  "drawer_open_place": {
+    "repo_id": "RoboSynChallenge/cobotmagic_Sim_drawer_open_place",
+    "revision": "6fdf6ee1ed74bbbbc0216d507c8a19c8994a15c3",
+    "total_episodes": 1000,
+    "total_frames": 425000,
+    "fps": 25,
+    "video_keys": [
+      "observation.images.cam_high",
+      "observation.images.cam_right_wrist",
+      "observation.images.cam_left_wrist"
+    ],
+    "codebase_version": "v2.1"
+  },
+  "mixer_operating": {
+    "repo_id": "RoboSynChallenge/cobotmagic_Sim_mixer_operating",
+    "revision": "fe5428c644932747b1109da98c6dc79a1caabd51",
+    "total_episodes": 1000,
+    "total_frames": 316000,
+    "fps": 25,
+    "video_keys": [
+      "observation.images.cam_high",
+      "observation.images.cam_right_wrist",
+      "observation.images.cam_left_wrist"
+    ],
+    "codebase_version": "v2.1"
+  },
+  "item_assembly": {
+    "repo_id": "RoboSynChallenge/cobotmagic_Sim_item_assembly",
+    "revision": "a2f2a4cecaa4f7f08bff309a3eac85c574bb2a86",
+    "total_episodes": 1000,
+    "total_frames": 318000,
+    "fps": 25,
+    "video_keys": [
+      "observation.images.cam_high",
+      "observation.images.cam_right_wrist",
+      "observation.images.cam_left_wrist"
+    ],
+    "codebase_version": "v2.1"
+  },
+  "manipulate_pipette": {
+    "repo_id": "RoboSynChallenge/cobotmagic_Sim_manipulate_pipette",
+    "revision": "168885aec78256de14e0c130ea12a6ba43e714a7",
+    "total_episodes": 1000,
+    "total_frames": 286000,
+    "fps": 25,
+    "video_keys": [
+      "observation.images.cam_high",
+      "observation.images.cam_right_wrist",
+      "observation.images.cam_left_wrist"
+    ],
+    "codebase_version": "v2.1"
+  },
+  "sample_loading": {
+    "repo_id": "RoboSynChallenge/cobotmagic_Sim_sample_loading",
+    "revision": "67208f9ba05f2f29a77b9c5e7b64acf26c3b3c44",
+    "total_episodes": 1000,
+    "total_frames": 372000,
+    "fps": 25,
+    "video_keys": [
+      "observation.images.cam_high",
+      "observation.images.cam_right_wrist",
+      "observation.images.cam_left_wrist"
+    ],
+    "codebase_version": "v2.1"
+  }
+}

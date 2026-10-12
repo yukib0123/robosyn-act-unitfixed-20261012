@@ -1,0 +1,21 @@
+policy_name: team_act
+task_name: null
+setting: random
+model_name: act_unitfixed_alltasks
+seed: 0
+max_episodes: 20
+max_steps: 1000
+headless: true
+pytorch_device: cuda
+filter_dataset_saving: true
+eval_video_log: true
+eval_video_obs_keys:
+  - cam_high
+  - cam_right_wrist
+  - cam_left_wrist
+eval_reset_sync_steps: 1
+eval_expert_check: true
+checkpoint_path: null
+act_step: 10
+device: cpu
+gripper_trace: false

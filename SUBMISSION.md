@@ -1,0 +1,40 @@
+# Fields for one all-ten-task evaluation request
+
+**artifact_name**
+
+maru29-act-unitfixed-20261012
+
+**experiment_name**
+
+ACT_physical_gripper_units_n50
+
+**short_description**
+
+All-task ACT with correct task-specific physical gripper conversion; official weights except fine-tuned Table. No environment modification.
+
+**code_url**
+
+https://github.com/yukib0123/robosyn-act-unitfixed-20261012
+
+**data_source**
+
+Official RoboSynChallenge task-specific simulation datasets and public ACT checkpoints. Dataset revisions are in ten_task_data_inventory.json. Submitted Table weights were fine-tuned from the official Table checkpoint using 200 demo episodes, 50 validation episodes, seed 20261012, lr 1e-6, batch 8, 2000 steps, selected step 1500; original normalization tensors preserved. The other nine submitted weights are unchanged official public ACT models.
+
+**run_and_dependency_notes**
+
+Use an official working RoboSynChallenge/EmbodiChain/DexSim Linux Python 3.11 environment. Tested: PyTorch 2.7.1+cu128, torchvision 0.22.1, LeRobot 0.3.3 at b883328e6c95681ca90a18b102e4ae5e1f91e2bf, evaluator ecbf88ae26bbd8e369eba868e23354c8f64e083f, EmbodiChain 89c14da8d0221dc4ee2a4a3e0ba1078b16d447bd, DexSim 0.4.3. Install ACT package pins per README, then bash setup.sh. All tasks: bash eval.sh TASK random 0. Pytorch device cuda, logical GPU 0, original action chunk/execution length 50, inherited CUDA_VISIBLE_DEVICES preserved. Exact checkpoint revisions/subdirectories are in task_mapping.json. Eight normalized-action tasks map gripper indices 6/13 to physical action-space limits once; Table already uses physical metres and ClickBell has fixed-zero actions. No environment palette/pose changes are included. Detailed gripper tracing is disabled. This request covers all ten tasks.
+
+**Checkpoint fields**
+
+- table_rearrangement: https://huggingface.co/yukib0123/robosyn-act-alltasks-20261012/tree/4dbacab83136d3b6e277313368547ea6d28f3d31/table_rearrangement
+- click_bell: https://huggingface.co/RoboSynChallenge/ACT_sim_click_bell/tree/677e65fbb15974024ff840893496197ef7db26d4
+- water_pouring: https://huggingface.co/RoboSynChallenge/ACT_sim_water_pouring/tree/0bf0fcfc931a69c52871385f28068fcf873cf07a
+- handle_basket: https://huggingface.co/RoboSynChallenge/ACT_sim_handle_basket/tree/6d5c70c4bb367e23b43e95cb155f7ad53f30cc79
+- items_handover: https://huggingface.co/RoboSynChallenge/ACT_sim_items_handover/tree/86f6ca7f5decd17a92c3218f295de53497383d14
+- drawer_open_place: https://huggingface.co/RoboSynChallenge/ACT_sim_drawer_open_place/tree/592e30434aad83cf7bd8f1ee105d7c401488743d
+- mixer_operating: https://huggingface.co/RoboSynChallenge/ACT_sim_mixer_operating/tree/0f12c53a2a6e093ae5e1e28f20480296b45fdf2b
+- item_assembly: https://huggingface.co/RoboSynChallenge/ACT_sim_item_assembly/tree/58955958519157176712a1eff319018d78177ddb
+- manipulate_pipette: https://huggingface.co/RoboSynChallenge/ACT_sim_manipulate_pipette/tree/ca013b2e202d594bf347530c61c3ba28c06d1bc2
+- sample_loading: https://huggingface.co/RoboSynChallenge/ACT_sim_sample_loading/tree/917bf2796f18abd0a16f723573382161f1a5c5c8
+
+Confirm all ten tasks in the form. Choose whether to count the run on the public leaderboard. Submit one request for the complete mapping; do not submit separate task requests. This package does not send the form. Preserve the previously submitted artifacts; this is a new code URL.
