@@ -1,0 +1,25 @@
+--- a/policy/act/deploy_policy.py
++++ b/policy/act/deploy_policy.py
+@@ -51,6 +51,7 @@
+         )
+ 
+     policy.act_device = next(policy.parameters()).device
++    policy.act_task_name = usr_args.get("task_name")
+     policy.act_step = int(usr_args.get("act_step", 8))
+     policy.state_obs_path = usr_args.get("state_obs_path", "robot/qpos")
+     policy.strict_action_dim = bool(usr_args.get("strict_action_dim", True))
+@@ -116,6 +117,14 @@
+             device=env.unwrapped.device,
+             dtype=torch.float32,
+         )
++        # Drawer-only correction; other task action commands are unchanged.
++        if model.act_task_name == "drawer_open_place":
++            action_tensor = action_tensor.clone()
++            indices = [6, 13]
++            space = env.unwrapped.single_action_space
++            low = torch.as_tensor(np.asarray(space.low).copy(), dtype=action_tensor.dtype, device=action_tensor.device)
++            high = torch.as_tensor(np.asarray(space.high).copy(), dtype=action_tensor.dtype, device=action_tensor.device)
++            action_tensor[:, indices] = low[indices] + action_tensor[:, indices].clamp(0, 1) * (high[indices] - low[indices])
+         if runs_model_inference:
+             finish_inference(started_at, inference_times_s, model.act_device)
+         final_obs, reward, terminated, truncated, info = env.step(action_tensor)

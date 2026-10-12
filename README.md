@@ -1,55 +1,94 @@
-# RoboSynChallenge ACT with task-specific physical gripper units
+# RoboSynChallenge 予選：中川側の進捗（チーム maru29）
 
-This release uses task-specific ACT checkpoints for all ten tasks. Eight normalized-action tasks convert gripper indices 6 and 13 from [0,1] to physical action-space limits after saved output unnormalization. Table rearrangement already outputs metres; ClickBell outputs fixed zero grippers. Arm coordinates and model action queues are unchanged. Every task predicts 50 actions and executes 50 before a new model query; the evaluator adapter returns after at most 10 env steps for progress accounting.
+最終更新：**2026-10-12 19:31 JST** ／ 締め切り：**2026-10-12 20:59 JST**
 
-No construction palette seed, object-pose replay, alternate randomization, or success-test modification is installed by this submission. The evaluation setting defaults to `random`. Exact immutable weight revisions and every task's command are in [task_mapping.json](task_mapping.json).
+> **こちらから再提出はしていません。** チームメイトからの連絡では、チームの混合モデル構成が18:45に提出済みです。最後の有効な提出だけが評価されるため、こちらの全ACT構成でチームの提出を上書きしません。
+>
+> **共有したい変更はDrawerだけです。** 公式ACT＋グリッパー単位変換で、チームと同じ内容の `random` 設定ファイルを使い、**18/20成功**を確認しました。他9タスクを保持する最小変更を、チーム側で確認・採用判断してもらうための資料です。
 
-## Environment and commands
+## 1. Drawerの実測結果
 
-Use the organizer's working Linux Python 3.11 simulator environment. Validated simulator stack: DexSim 0.4.3, EmbodiChain commit `89c14da8d0221dc4ee2a4a3e0ba1078b16d447bd`, official evaluator commit `ecbf88ae26bbd8e369eba868e23354c8f64e083f`. DexSim and simulator assets are supplied through the official RoboSynChallenge setup; this repo does not redistribute them.
+| 評価 | 成功 | 平均動作ステップ | 備考 |
+|---|---:|---:|---|
+| 修正した公式ACT、random 20回 | **18/20（90%）** | **422.40 / 900** | job 31877。比較用パレット固定・姿勢再適用なし |
+| 修正した公式ACT、別seed系列のclear 20回 | 5/20（25%） | 743.35 / 900 | job 31862。上記とは条件・seed群が異なる |
+| 修正した公式ACT、clearの初期動作確認 | 2/3 | 545.67 / 900 | 実測関節値と指令値も確認 |
+| 自作Drawer ACT、単位修正後のclear確認 | 3/3 | 349.00 / 900 | 少数回なので、これだけで公開版より良いとは判断しない |
 
-ACT environment pins are PyTorch 2.7.1+cu128, torchvision 0.22.1, LeRobot 0.3.3 commit `b883328e6c95681ca90a18b102e4ae5e1f91e2bf`, plus [requirements-act.txt](requirements-act.txt). If ACT dependencies are absent, install them into that working simulator environment:
+採用を提案する重みは**新規モデルではなく、公式公開ACT**です。
 
-```bash
-python -m pip install --index-url https://download.pytorch.org/whl/cu128 torch==2.7.1 torchvision==0.22.1
-python -m pip install -r requirements-act.txt
-python -m pip install --no-deps https://github.com/huggingface/lerobot/archive/b883328e6c95681ca90a18b102e4ae5e1f91e2bf.zip
-bash setup.sh
-bash eval.sh drawer_open_place random 0 --max_episodes 20 --seed 0
-```
+- HF：<https://huggingface.co/RoboSynChallenge/ACT_sim_drawer_open_place/tree/592e30434aad83cf7bd8f1ee105d7c401488743d>
+- 予測長50、実行長50、元の正規化統計を使用。
+- GPUはNVIDIA H200、PyTorch 2.7.1+cu128、LeRobot 0.3.3（`b883328e6c95681ca90a18b102e4ae5e1f91e2bf`）。
+- 評価コードはRoboSynChallenge `ecbf88ae26bbd8e369eba868e23354c8f64e083f`、DexSim 0.4.3。
+- 20/24の候補seedが公式のexpert feasibility checkを通過。成功率は受理された20エピソードに対する値。
 
-All ten commands follow `bash eval.sh TASK random 0`; see the full mapping below. GPU 0 is a logical ordinal inside the allocation. The inherited CUDA_VISIBLE_DEVICES is preserved. This all-ACT release requires no separate worker, SmolVLA, IPC setup, or site-specific proxy. SYNKA hardware alignment and short-path asset import were external site wrappers; an organizer installation should use its own working CUDA/renderer configuration.
+### 物理設定について
 
-Detailed gripper tracing is off by default. `ROBOSYN_LOCAL_CHECKPOINT_ROOT`, if explicitly set, is an offline override for local verification; normal submission commands resolve the pinned public HF artifacts anonymously.
+こちらで追加の剛性・減衰・把持力変更を行った結果ではありません。評価に用いた `configs/drawer_open_place/random/gym_config.json` と、確認時点のチームmainの同ファイルをJSONとして比較し、**全内容が一致**しました。
 
-## Data and training
+「公式の設定ファイルに手を加えていない」という意味であり、すべての歴史的な評価設定・非公開本番設定と同一という意味ではありません。公式のACT 29%に付いている `drawer_drive050_grip20` の注記とは区別してください。本番でも90%になると保証するものではありません。
 
-Public source checkpoints and datasets are from RoboSynChallenge. Exact dataset revisions are in [ten_task_data_inventory.json](ten_task_data_inventory.json). Fine-tuned weights are published with the selected training step, train/validation episode IDs, seed, original weight hash and loss history in each HF task subfolder. Training used 200 demonstration episodes, 50 validation episodes, seed 20261012, batch 8, lr 1e-6 and 2000 steps of the original ACT CVAE objective. Original normalization buffers were retained exactly. `train_click_bell.py` contains the generic training/data wrapper used for the task runs; no new training is performed at evaluation time.
+SYNKA固有の対処は割当GPUのCUDA/Vulkan/NVML整合と、内容が同一のURDFを短いパスで読み込む処理です。パレット固定・物体姿勢再適用を使った別の比較実験もありますが、**上の18/20はそれらを使わない評価**です。
 
-Official private-test scores are unknown. Local evaluations, their settings and limitations are recorded separately; controlled-reset experiments are not represented as untouched official-environment results.
+## 2. 修正の内容とチームへの受け渡し
 
-## Final mapping
+Drawerのcheckpointが出すグリッパー成分6・13は0〜1の開度です。環境の物理関節範囲は0〜0.05 mで、**0が閉、0.05が開**です。モデル出力の平均・標準偏差を戻した後、環境へ渡す直前に変換します。
 
-Table uses our fine-tuned checkpoint. The other nine tasks use official public ACT checkpoints. Corrected Pipette comparisons tied at 7/10; Mixer tied at 3/3; the public models are retained without claiming a fine-tuned advantage. Table's original physical gripper units are unchanged, so its previous matched clear20 comparison remains applicable (both 20/20, selected fine-tune slightly fewer mean steps).
+| モデル出力 | 正しい物理指令 |
+|---:|---:|
+| 0 | 0 m |
+| 0.5 | 0.025 m |
+| 1 | 0.05 m |
 
-| Task | Checkpoint | Execution length | Run command |
-|---|---|---:|---|
-| table_rearrangement | [ours, selected step 1500](https://huggingface.co/yukib0123/robosyn-act-alltasks-20261012/tree/4dbacab83136d3b6e277313368547ea6d28f3d31/table_rearrangement) | 50 | `bash eval.sh table_rearrangement random 0` |
-| click_bell | [official ACT](https://huggingface.co/RoboSynChallenge/ACT_sim_click_bell/tree/677e65fbb15974024ff840893496197ef7db26d4) | 50 | `bash eval.sh click_bell random 0` |
-| water_pouring | [official ACT](https://huggingface.co/RoboSynChallenge/ACT_sim_water_pouring/tree/0bf0fcfc931a69c52871385f28068fcf873cf07a) | 50 | `bash eval.sh water_pouring random 0` |
-| handle_basket | [official ACT](https://huggingface.co/RoboSynChallenge/ACT_sim_handle_basket/tree/6d5c70c4bb367e23b43e95cb155f7ad53f30cc79) | 50 | `bash eval.sh handle_basket random 0` |
-| items_handover | [official ACT](https://huggingface.co/RoboSynChallenge/ACT_sim_items_handover/tree/86f6ca7f5decd17a92c3218f295de53497383d14) | 50 | `bash eval.sh items_handover random 0` |
-| drawer_open_place | [official ACT](https://huggingface.co/RoboSynChallenge/ACT_sim_drawer_open_place/tree/592e30434aad83cf7bd8f1ee105d7c401488743d) | 50 | `bash eval.sh drawer_open_place random 0` |
-| mixer_operating | [official ACT](https://huggingface.co/RoboSynChallenge/ACT_sim_mixer_operating/tree/0f12c53a2a6e093ae5e1e28f20480296b45fdf2b) | 50 | `bash eval.sh mixer_operating random 0` |
-| item_assembly | [official ACT](https://huggingface.co/RoboSynChallenge/ACT_sim_item_assembly/tree/58955958519157176712a1eff319018d78177ddb) | 50 | `bash eval.sh item_assembly random 0` |
-| manipulate_pipette | [official ACT](https://huggingface.co/RoboSynChallenge/ACT_sim_manipulate_pipette/tree/ca013b2e202d594bf347530c61c3ba28c06d1bc2) | 50 | `bash eval.sh manipulate_pipette random 0` |
-| sample_loading | [official ACT](https://huggingface.co/RoboSynChallenge/ACT_sim_sample_loading/tree/917bf2796f18abd0a16f723573382161f1a5c5c8) | 50 | `bash eval.sh sample_loading random 0` |
+元の処理では0.5をそのまま渡し、環境側が上限0.05へ切り詰めていました。中間の開度や閉じる指令の小さな誤差が、大きな物理値になってしまいます。
 
-## Verification
+公開できる最小コード差分：[drawer_adapter_only.patch](patches/drawer_adapter_only.patch)。公式の公開ACTアダプタを元に作成し、Drawerの場合にだけ変換する条件分岐です。チームmain向けの**対応表変更も含む2ファイル版**は、別途添付した `drawer_only.patch` を使用してください。
 
-* Corrected official Drawer, unchanged gym configuration and no comparison palette/pose wrapper: random20, 18/20 success, job 31877. This is a local H200 result, not a guarantee of private-test success.
-* Actual released loader: all ten selected immutable checkpoints strictly reloaded on GPU, predicted finite [1,50,14] chunks from task-specific recorded observations, and produced finite physical-unit actions (31888).
-* Actual `eval.sh` path: ClickBell and fine-tuned Table each completed one random episode normally and succeeded (31889 and 31890). External SYNKA wrappers only handled assigned CUDA/Vulkan devices and byte-identical short-path robot assets.
-* Anonymous HF accessibility and selected fine-tuned weight hashes checked; policy package exports, Python compilation and shell syntax checked.
+チーム側で必要なのは次の3点です。
 
-See verification/evaluation data in `verification/` and [SUBMISSION.md](SUBMISSION.md) for the exact fields. This final all-ACT configuration has no DP or SmolVLA runtime dependency. Earlier experiments and models remain separate. No form submission is performed by this repository.
+1. Drawerにだけ単位変換を適用。**他タスクへ一律に適用しない**。
+2. `submission/checkpoints.json` のDrawerを上記の公式ACT・固定revisionへ変更。他9タスクを維持。
+3. `bash eval.sh drawer_open_place random 0 --headless True` で確認し、採用する場合はフォームのDrawerのHF欄と提出メモも整合させる。
+
+共有ファイルに共通アダプタの変更があっても、変換は `task_name == "drawer_open_place"` の場合だけです。CPUテストではDrawerの0/0.5/1変換、腕の関節値・モデル内の元tensor保持、ClickBell・Water・Handleの指令値不変を確認しました。これはチーム環境でのGPU動作確認を代替するものではありません。
+
+## 3. ClickBell
+
+**新しいClickBellモデルは作成していません。** チームが現在使っているFT版は、昨日公開した250ステップ選択のモデルです。
+
+<https://huggingface.co/yukib0123/robosyn-act-clickbell-20261012/tree/0ba62e98e11840703168facd7237d9640313295c>
+
+我々のclear評価は公式ACT18/20、FT版17/20です。これだけでFT版の優位性は確認できません。ClickBellのDP追加評価は見送り、こちらの独立候補では公式ACTを維持しました。チームの提出済みFT版を勝手に変更していません。
+
+## 4. その他の単位修正後の確認
+
+以下は我々のH200環境での `clear` 結果です。少数回の確認と、別条件の公式リーダーボードを直接比較しないでください。
+
+| タスク | 公式ACT | 我々の自作ACT |
+|---|---:|---:|
+| Water pouring | 1/3 | 1/3 |
+| Handle basket | 0/3 | 0/3 |
+| Items handover | 0/3 | 0/3 |
+| Mixer operating | 3/3 | 3/3 |
+| Item assembly | 0/3 | 0/3 |
+| Manipulate pipette | 7/10 | 7/10 |
+| Sample loading | 0/3 | 0/3 |
+
+Tableはもともと物理単位のactionなので変換不要です。以前の同seedのclear20比較は公式20/20、自作20/20で、我々の独立候補では平均ステップが少し短い自作版を選びました。
+
+Handoverの3失敗動画では、安定したペン把持・持ち上げが成立しないまま受け渡し動作へ進む場面が共通しています。途中で再推論しても進行するため、古いactionキューだけが原因とは判断していません。追加学習・全面的な実行長探索は行っていません。
+
+## 5. 公開成果物と確認済み事項
+
+- [我々の独立した提出候補・main](https://github.com/yukib0123/robosyn-act-unitfixed-20261012/tree/main)：**未提出。チーム提出の置き換えには使わない**。Tableのみ自作、他9タスクは公式ACT、実行長50。
+- [全10タスクの自作FT候補](https://huggingface.co/yukib0123/robosyn-act-alltasks-20261012/tree/4dbacab83136d3b6e277313368547ea6d28f3d31)：各タスクのconfig・重み・学習履歴・データ分割を保存。すべてを提出に採用しているわけではありません。
+- 最終候補10checkpointの匿名アクセス、固定revision、重みのSHA-256を確認。
+- 提出用ローダーで全10タスクをGPUでstrict reloadし、実際の記録画像から有限の `[1,50,14]` 予測と物理単位actionを確認（31888）。
+- 提出用 `eval.sh` でClickBellとTableを各1回random評価し、両方正常終了・成功（31889、31890）。1回の結果は成功率推定として使わない。
+
+詳細な評価値・受理seed・保存先：[final_selection_checks.json](verification/final_selection_checks.json)。全10タスクの読み込み結果：[selected_checkpoints.json](verification/selected_checkpoints.json)。
+
+## 6. 最終判断の分担
+
+こちらの役割は、Drawerの実測結果・固定checkpoint・単位変換コードを共有することです。チームメイトが、既存の自作Handle basketとSmolVLA構成を保持したまま、Drawerの動作確認・採用判断・提出内容の更新を行う想定です。**こちらから再提出・チームmainへの変更・チームメイトへの自動送信は行っていません。**
